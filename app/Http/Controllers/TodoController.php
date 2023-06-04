@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 class TodoController extends Controller
 {
     public function store(Request $request){
+       
         $data = $request->validate([
             'title' => 'required|string|max:255',
             'priority' => 'nullable|integer|min:1|max:3',
@@ -53,11 +54,11 @@ class TodoController extends Controller
         $todo = Todo::find($id);
         if($todo){
             $todo->update($data);
-
+            $todos = Todo::all();
             return response()->json([
                 'status' => true,
                 'message' => 'Todo updated.',
-                'data' => $todo,
+                'data' => $todos,
             ],200);
         }
         else{
